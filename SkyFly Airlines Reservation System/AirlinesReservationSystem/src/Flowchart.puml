@@ -1,0 +1,63 @@
+@startuml
+
+start
+
+:User Login/Signup;
+if (User is Logged In) then (yes)
+  :Display Main Menu;
+  if (User selects "Search Flights") then (yes)
+    :Perform Flight Search;
+    if (Flights Found) then (yes)
+      :Display Available Flights;
+    else (no)
+      :Display "No Flights Found" Message;
+    endif
+  endif
+
+  if (User selects "Book Flight") then (yes)
+    :Collect Booking Details;
+    if (Booking is Successful) then (yes)
+      :Display Booking Confirmation;
+    else (no)
+      :Display "Booking Failed" Message;
+    endif
+  endif
+
+  :Fetch Booked Flights;
+  :Display Booked Flights;
+
+  if (User selects "Cancel Ticket") then (yes)
+    :Provide Booking ID;
+    if (Booking ID Valid) then (yes)
+      :Cancel Ticket;
+      if (Cancellation Successful) then (yes)
+        :Display Cancellation Confirmation;
+      else (no)
+        :Display "Cancellation Failed" Message;
+      endif
+    else (no)
+      :Display "Invalid Booking ID" Message;
+    endif
+  endif
+
+  if (User selects "Add Special Services") then (yes)
+    :Provide Booking ID;
+    if (Booking ID Valid) then (yes)
+      :Add Special Services;
+      if (Services Added Successfully) then (yes)
+        :Display "Services Added Successfully";
+      else (no)
+        :Display "Failed to Add Services" Message;
+      endif
+    else (no)
+      :Display "Invalid Booking ID" Message;
+    endif
+  endif
+
+else (no)
+  :Display "Login/Signup Required" Message;
+endif
+
+stop
+
+@enduml

@@ -1,0 +1,112 @@
+@startuml
+
+class AirlinesReservationSystem {
+  +main(args: String[]): void
+  +getConnectionFromProperties(filePath: String): Connection
+  +loadPropertiesFile(filePath: String): Properties
+  +performLoginOrSignUp(connection: Connection): void
+}
+
+class Login {
+  +verifyLogin(connection: Connection, email: String, password: String): boolean
+  +performLogin(connection: Connection): void
+  -getName(connection: Connection, email: String): String
+}
+
+class SignUp {
+  +performSignUp(connection: Connection): void
+  -addUser(connection: Connection, name: String, age: int, email: String, password: String, mobileno: String): void
+  -isValidEmail(email: String): boolean
+  -isValidMobileNumber(mobileno: String): boolean
+}
+
+class Flights {
+  +flightDetails(connection: Connection): void
+}
+
+class searchingFlights {
+  +searchFlights(connection: Connection): void
+}
+
+class ViewBookedFlights {
+  +viewFlights(connection: Connection): void
+}
+
+class availableRoutes {
+  +Routes(connection: Connection): void
+}
+
+class specialServices {
+  +addSpecialStatus(connection: Connection): void
+  -isBookingExists(connection: Connection, bookingId: String): boolean
+  -insertSpecialService(connection: Connection, bookingId: String, column: String, value: String): void
+  -updateSpecialService(connection: Connection, bookingId: String, column: String, value: String): void
+  -addSpecialBaggage(connection: Connection, bookingId: String): void
+  -addSpecialMeals(connection: Connection, bookingId: String): void
+  -addSpecialAssistance(connection: Connection, bookingId: String): void
+  -addReducedMobility(connection: Connection, bookingId: String): void
+  -addAnimalTravelAssistance(connection: Connection, bookingId: String): void
+}
+
+class TicketCancellation {
+  +cancelTicket(connection: Connection): void
+  -getFlightName(connection: Connection, flightId: int): String
+  -getDepartureDateTime(connection: Connection, flightId: int): String
+  -calculateRefund(connection: Connection, bookingId: String): double
+  -updateBookingStatus(connection: Connection, bookingId: String, status: String): void
+  -updateCancellationReason(connection: Connection, bookingId: String, cancellationReason: String): void
+}
+
+class classesSelection {
+  +classesSelection(connection: Connection)
+  +classTypesandSeats(flightIds: List<Integer>, departureDate: String): void
+}
+
+class bookFlight {
+  +booking(connection: Connection): void
+  -updateSeatAvailability(connection: Connection, flightId: int, classType: String): void
+  -getPassengerAge(): int
+  -Registration(connection: Connection, bookingId: String, flightId: int, passengerName: String, nationality: String, passportNumber: String, date: String, country: String, address: String, email: String, mobileNumber: String, seatSelection: String, meals: String, classType: String, seatsBooked: int, age: int): void
+}
+
+class FlightPriceCalculator {
+  +calculatePrice(connection: Connection, flightID: int, classType: String, age: int): double
+  +calculateBasePrice(connection: Connection, flightID: int, classType: String): double
+  -calculateDiscountBasedOnAge(age: int): double
+  -calculateTax(price: double): double
+}
+
+class BookingIdGenerator {
+  +generateBookingId(): String
+}
+
+class FlightInfo {
+  +FlightInfo(economyPrice: double, economySeats: int, businessPrice: double, businessSeats: int, premiumPrice: double, premiumSeats: int)
+  +getEconomySeats(): int
+  +setEconomySeats(economySeats: int): void
+  +getEconomyPrice(): double
+  +setEconomyPrice(economyPrice: double): void
+  +getBusinessSeats(): int
+  +setBusinessSeats(businessSeats: int): void
+  +getPremiumPrice(): double
+  +setPremiumPrice(premiumPrice: double): void
+  +getPremiumSeats(): int
+  +setPremiumSeats(premiumSeats: int): void
+}
+
+AirlinesReservationSystem --> Login : creates
+AirlinesReservationSystem --> SignUp : creates
+AirlinesReservationSystem --> Flights : creates
+AirlinesReservationSystem --> searchingFlights : creates
+Flights --> searchingFlights : calls
+Flights --> ViewBookedFlights : calls
+Flights --> availableRoutes : calls
+Flights --> specialServices : calls
+Flights --> TicketCancellation : calls
+searchingFlights --> classesSelection : calls
+classesSelection --> bookFlight : calls
+bookFlight --> BookingIdGenerator : uses
+bookFlight --> FlightPriceCalculator : uses
+ViewBookedFlights --> TicketCancellation : calls
+
+@enduml

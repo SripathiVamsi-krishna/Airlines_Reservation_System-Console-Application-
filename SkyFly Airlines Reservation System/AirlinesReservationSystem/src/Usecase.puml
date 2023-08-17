@@ -1,0 +1,21 @@
+@startuml
+
+actor User as "User"
+
+rectangle "Airlines Reservation System" {
+    usecase "Login/Signup" as LoginSignup
+    usecase "Search Flights" as Search
+    usecase "Book Flight" as Book
+    usecase "View Booked Flights" as ViewBooked
+    usecase "Cancel Ticket" as Cancel
+    usecase "Add Special Services" as AddSpecial
+}
+
+User --> LoginSignup : "Logs in/Signs up"
+User --> Search : "Searches Flights"
+User --> Book : "Books a Flight"
+User --> ViewBooked : "Views Booked Flights"
+User --> Cancel : "Cancels a Ticket"
+User --> AddSpecial : "Adds Special Services"
+
+@enduml

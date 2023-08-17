@@ -1,0 +1,34 @@
+@startuml
+
+!define ENTITY class
+!define RELATIONSHIP association
+!define ATTRIBUTE field
+
+ENTITY Customer {
+    customerId : int
+    name : string
+    email : string
+}
+
+ENTITY Order {
+    orderId : int
+    date : string
+    totalAmount : double
+}
+
+ENTITY Product {
+    productId : int
+    name : string
+    price : double
+}
+
+ENTITY OrderItem {
+    orderItemId : int
+    quantity : int
+}
+
+RELATIONSHIP Customer -- Order : "Places"
+RELATIONSHIP Order -- OrderItem : "Contains"
+RELATIONSHIP Product -- OrderItem : "Appears in"
+
+@enduml
